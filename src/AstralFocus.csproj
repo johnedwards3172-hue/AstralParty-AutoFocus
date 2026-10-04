@@ -1,20 +1,44 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <AssemblyName>AstralFocus</AssemblyName>
+    <AssemblyName>AstralPartyAutoFocus</AssemblyName>
     <RootNamespace>AstralFocus</RootNamespace>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <Version>0.2.0</Version>
+    <Version>0.3.0</Version>
+    <Product>AstralParty AutoFocus</Product>
+    <Description>星引擎 Astral Party 行动前置插件：轮到我操作时自动把游戏窗口置前</Description>
     <NoWarn>CS0436;CS0108</NoWarn>
-    <!-- 按本机情况覆盖，例如：
-         dotnet build -c Release -p:BepInExDir="C:\BepInEx\core" -p:InteropDir="C:\Game\BepInEx\interop" -->
-    <BepInExDir Condition="'$(BepInExDir)' == ''">E:\gpt\_ref\bebe\BepInEx\core</BepInExDir>
-    <InteropDir Condition="'$(InteropDir)' == ''">D:\Program Files (x86)\Steam\steamapps\common\Astral Party\8vJXn6CN\BepInEx\interop</InteropDir>
+
+    <!-- 不把本机源码路径写进 DLL/PDB -->
+    <Deterministic>true</Deterministic>
+    <DeterministicSourcePaths>true</DeterministicSourcePaths>
+    <PathMap>$(MSBuildProjectDirectory)=/src</PathMap>
+    <DebugType>none</DebugType>
   </PropertyGroup>
+
+  <!--
+    BepInEx 依赖路径。三种指定方式，优先级从高到低：
+      1. dotnet build -c Release -p:BepInExDir=... -p:InteropDir=...
+      2. 放在仓库的 lib/ 目录下：
+           lib/BepInEx/core/*.dll      (BepInEx.Core.dll 等)
+           lib/interop/*.dll           (游戏 BepInEx/interop 下的生成文件)
+      3. 直接改下面两个默认值
+  -->
+  <PropertyGroup>
+    <BepInExDir Condition="'$(BepInExDir)' == '' AND Exists('$(MSBuildThisFileDirectory)..\lib\BepInEx\core')">$(MSBuildThisFileDirectory)..\lib\BepInEx\core</BepInExDir>
+    <InteropDir Condition="'$(InteropDir)' == '' AND Exists('$(MSBuildThisFileDirectory)..\lib\interop')">$(MSBuildThisFileDirectory)..\lib\interop</InteropDir>
+  </PropertyGroup>
+
+  <Target Name="CheckDeps" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="!Exists('$(BepInExDir)\BepInEx.Core.dll')"
+           Text="找不到 BepInEx.Core.dll。请用 -p:BepInExDir=&quot;...\BepInEx\core&quot; 指定 BepInEx 6 (IL2CPP) 的 core 目录，或把文件放到 lib\BepInEx\core\。" />
+    <Error Condition="!Exists('$(InteropDir)\UnityEngine.dll')"
+           Text="找不到 UnityEngine.dll。请用 -p:InteropDir=&quot;...\BepInEx\interop&quot; 指定游戏生成的 interop 目录，或把文件放到 lib\interop\。" />
+  </Target>
 
   <ItemGroup>
     <Reference Include="BepInEx.Core">
@@ -48,4 +72,3 @@
   </ItemGroup>
 
 </Project>
-
