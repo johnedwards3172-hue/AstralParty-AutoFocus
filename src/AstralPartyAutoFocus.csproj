@@ -3,14 +3,14 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>AstralPartyAutoFocus</AssemblyName>
-    <RootNamespace>AstralFocus</RootNamespace>
+    <RootNamespace>AstralParty.AutoFocus</RootNamespace>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <Version>0.3.0</Version>
-    <Product>AstralParty AutoFocus</Product>
-    <Description>星引擎 Astral Party 行动前置插件：轮到我操作时自动把游戏窗口置前</Description>
+    <Version>0.4.0</Version>
+    <Product>Astral Party AutoFocus</Product>
+    <Description>星引擎 Astral Party（吉星派对）窗口前置插件：轮到你操作时自动把游戏窗口抢到前台</Description>
     <NoWarn>CS0436;CS0108</NoWarn>
 
     <!-- 不把本机源码路径写进 DLL -->

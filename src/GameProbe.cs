@@ -1,7 +1,7 @@
 using Il2CppInterop.Runtime;
 using System;
 
-namespace AstralFocus
+namespace AstralParty.AutoFocus
 {
     /// <summary>
     /// 只读地读取游戏状态。所有访问都走 il2cpp 原始 API，

@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace AstralFocus
+namespace AstralParty.AutoFocus
 {
     /// <summary>窗口前置所需的 Win32 调用。只做前台切换/还原/临时置顶，不修改游戏任何数据。</summary>
     internal static class Win32

@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace AstralFocus
+namespace AstralParty.AutoFocus
 {
     /// <summary>
     /// 直接从 GameAssembly.dll 绑定原始 il2cpp 导出。

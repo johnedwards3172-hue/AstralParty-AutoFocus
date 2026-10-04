@@ -1,6 +1,6 @@
 using BepInEx.Configuration;
 
-namespace AstralFocus
+namespace AstralParty.AutoFocus
 {
     internal static class Config
     {

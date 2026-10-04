@@ -1,4 +1,5 @@
-﻿# AstralParty AutoFocus 安装脚本：把插件部署到游戏目录
+﻿# Astral Party AutoFocus 安装脚本：把插件部署到游戏目录
+# 适用游戏：星引擎 Astral Party / 吉星派对（Steam AppID 2622000）
 # 只添加文件，不改动游戏原有可执行文件内容。
 #
 # 前置条件（详见 README「二、安装前必读」）：
@@ -89,8 +90,8 @@ Write-Host "SHA1: $dstHash"
 Write-Host "首次启动会生成 IL2CPP interop 文件，比平时慢，属正常。"
 Write-Host ""
 Write-Host "默认是【探查模式】：只写日志、不前置窗口。" -ForegroundColor Yellow
-Write-Host "请登录并打一局，然后查看 BepInEx\AstralFocus.diag.log 核对触发点。"
-Write-Host "确认无误后，编辑 BepInEx\config\astralfocus.local.turnnotify.cfg，把 LogOnly 改成 false 即可启用前置。"
+Write-Host "请登录并打一局，然后查看 BepInEx\AstralPartyAutoFocus.diag.log 核对触发点。"
+Write-Host "确认无误后，编辑 BepInEx\config\astralparty.autofocus.cfg，把 LogOnly 改成 false 即可启用前置。"
 Write-Host ""
 Write-Host "启动方式（直接跑 exe 会因非 Steam 客户端自杀）：" -ForegroundColor Yellow
 Write-Host '  & "<你的Steam目录>\Steam.exe" -applaunch 2622000'

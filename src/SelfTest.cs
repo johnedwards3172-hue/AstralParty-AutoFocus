@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 
-namespace AstralFocus
+namespace AstralParty.AutoFocus
 {
     /// <summary>
     /// 运行中持续探测：跟踪"回合奖励卡"相关对象与窗口状态的真实变化，
@@ -20,7 +20,7 @@ namespace AstralFocus
                     try { Scan(); } catch (Exception e) { Diagnostics.Log("探测异常: " + e.Message); }
                     Thread.Sleep(300);
                 }
-            }) { IsBackground = true, Name = "AstralFocusProbe" };
+            }) { IsBackground = true, Name = "AstralPartyAutoFocusProbe" };
             t.Start();
         }
 

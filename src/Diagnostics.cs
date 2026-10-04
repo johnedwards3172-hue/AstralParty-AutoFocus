@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace AstralFocus
+namespace AstralParty.AutoFocus
 {
     /// <summary>立即刷盘的诊断日志（BepInEx 日志在崩溃时可能丢缓冲）。</summary>
     internal static class Diagnostics
@@ -12,8 +12,8 @@ namespace AstralFocus
         {
             get
             {
-                try { return Path.Combine(BepInEx.Paths.BepInExRootPath, "AstralFocus.diag.log"); }
-                catch { return "AstralFocus.diag.log"; }
+                try { return Path.Combine(BepInEx.Paths.BepInExRootPath, "AstralPartyAutoFocus.diag.log"); }
+                catch { return "AstralPartyAutoFocus.diag.log"; }
             }
         }
 

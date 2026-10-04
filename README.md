@@ -1,6 +1,11 @@
-# AstralParty-AutoFocus
+# Astral Party AutoFocus
 
-**星引擎 Astral Party 行动前置插件** —— 轮到你操作时，自动把游戏窗口抢到前台，不再因为切出去看视频/聊天而错过自己的回合。
+**星引擎 Astral Party / 吉星派对 窗口前置插件** —— 轮到你操作时，自动把游戏窗口抢到前台，
+不再因为切出去看视频、刷网页、回消息而错过自己的回合。
+
+- **英文名**：Astral Party（Steam AppID `2622000`）
+- **中文名**：吉星派对（国服商店名；游戏内自称《星引擎 party》）
+- **搜索关键词**：星引擎 / 吉星派对 / Astral Party / 回合前置 / 窗口置前 / 自动切回 / BepInEx 插件
 
 覆盖三类事件：
 
@@ -118,7 +123,7 @@ powershell -ExecutionPolicy Bypass -File install.ps1 -GameDir "你的游戏目�
 插件默认 `LogOnly = true`，只写日志、不抢窗口。先跑一局确认触发点正确：
 
 1. 启动游戏，打一局（要包含：自己的回合、被怪物攻击需防御、弹回合奖励卡）。
-2. 打开 `BepInEx\AstralFocus.diag.log`，应看到：
+2. 打开 `BepInEx\AstralPartyAutoFocus.diag.log`，应看到：
 
 ```
 激活: 轮到我的回合 (playerId=123456)
@@ -130,7 +135,7 @@ powershell -ExecutionPolicy Bypass -File install.ps1 -GameDir "你的游戏目�
 
 ### 第二步：开启前置
 
-编辑 `BepInEx\config\astralfocus.local.turnnotify.cfg`：
+编辑 `BepInEx\config\astralparty.autofocus.cfg`：
 
 ```ini
 LogOnly = false
@@ -167,9 +172,9 @@ LogOnly = false
 | 日志出现「等待游戏就绪… 未找到热更类型」 | 游戏更新改了热更类名/字段名，见下一节 |
 | 日志出现 `非steam客户端启动` | 没用 Steam 启动 |
 | 完全不抢窗口 | 检查配置里 `LogOnly` 是否还是 `true` |
-| 切走之后又被拉回来 | 不应该发生。若出现请提 issue，附上 `AstralFocus.diag.log` |
+| 切走之后又被拉回来 | 不应该发生。若出现请提 issue，附上 `AstralPartyAutoFocus.diag.log` |
 
-诊断日志：`BepInEx\AstralFocus.diag.log`（**每次写入立即刷盘**，游戏崩溃也不丢）。
+诊断日志：`BepInEx\AstralPartyAutoFocus.diag.log`（**每次写入立即刷盘**，游戏崩溃也不丢）。
 首行会打印**构建指纹**（MVID + DLL 写入时间），用来确认到底加载的是哪个版本。
 
 ---

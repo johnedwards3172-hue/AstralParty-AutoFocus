@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace AstralFocus
+namespace AstralParty.AutoFocus
 {
     /// <summary>
     /// 极薄的 IL2CPP 反射层，直接使用 GameAssembly.dll 导出的原始 il2cpp API。

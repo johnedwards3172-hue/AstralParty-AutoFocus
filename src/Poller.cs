@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading;
 using Il2CppInterop.Runtime;
 
-namespace AstralFocus
+namespace AstralParty.AutoFocus
 {
     /// <summary>
     /// 后台线程轮询游戏状态。全部走原始 il2cpp API（不经过 Il2CppInterop 的钩子），
@@ -57,7 +57,7 @@ namespace AstralFocus
             if (_running) return;
             _running = true;
             RegisterExitSafetyNet();
-            _thread = new Thread(Loop) { IsBackground = true, Name = "AstralFocus" };
+            _thread = new Thread(Loop) { IsBackground = true, Name = "AstralPartyAutoFocus" };
             _thread.Start();
         }
 
@@ -99,13 +99,13 @@ namespace AstralFocus
                     if (_probeFail <= 3)
                     {
                         Diagnostics.Log("探针未就绪: " + _probe.LastError);
-                        Plugin.LogSource?.LogInfo("[AstralFocus] 等待游戏就绪… (" + _probe.LastError + ")");
+                        Plugin.LogSource?.LogInfo("[AstralPartyAutoFocus] 等待游戏就绪… (" + _probe.LastError + ")");
                     }
                     _probe = null;
                     return;
                 }
                 Diagnostics.Log("探针就绪");
-                Plugin.LogSource?.LogInfo("[AstralFocus] 已定位游戏类型，开始监控。");
+                Plugin.LogSource?.LogInfo("[AstralPartyAutoFocus] 已定位游戏类型，开始监控。");
             }
 
             long self;
@@ -254,7 +254,7 @@ namespace AstralFocus
                 {
                     t.SkipLogged = true;
                     Diagnostics.Log("触发: " + desc + "  (探查模式，未前置)");
-                    Plugin.LogSource?.LogInfo("[AstralFocus] 触发: " + desc + "  (探查模式，未前置)");
+                    Plugin.LogSource?.LogInfo("[AstralPartyAutoFocus] 触发: " + desc + "  (探查模式，未前置)");
                 }
                 t.Satisfied = true;
                 return;
@@ -288,7 +288,7 @@ namespace AstralFocus
             t.AttemptGate.Restart();
             t.Attempts++;
 
-            Plugin.LogSource?.LogInfo("[AstralFocus] 触发: " + desc + "  → 前置窗口");
+            Plugin.LogSource?.LogInfo("[AstralPartyAutoFocus] 触发: " + desc + "  → 前置窗口");
             if (Focus())
             {
                 t.Satisfied = true;     // 抢到即满足，后续切走不再抢回

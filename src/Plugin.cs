@@ -3,30 +3,30 @@ using BepInEx;
 using BepInEx.Logging;
 using BepInEx.Unity.IL2CPP;
 
-namespace AstralFocus
+namespace AstralParty.AutoFocus
 {
-    [BepInPlugin(Guid, "Astral Focus", "0.1.0")]
+    [BepInPlugin(Guid, "Astral Party AutoFocus", "0.4.0")]
     public sealed class Plugin : BasePlugin
     {
-        public const string Guid = "astralfocus.local.turnnotify";
+        public const string Guid = "astralparty.autofocus";
 
         internal static ManualLogSource LogSource;
 
         public override void Load()
         {
             LogSource = base.Log;
-            AstralFocus.Config.Load(base.Config);
+            AstralParty.AutoFocus.Config.Load(base.Config);
             Diagnostics.Log("Load 进入");
             LogBuildStamp();
 
-            if (AstralFocus.Config.SelfTest.Value)
+            if (AstralParty.AutoFocus.Config.SelfTest.Value)
             {
                 Diagnostics.Log("进入自检模式（不启动常规监控）");
                 SelfTest.Run();
                 return;
             }
 
-            try { Poller.Start(); LogSource.LogInfo("[AstralFocus] 监控已启动。"); }
+            try { Poller.Start(); LogSource.LogInfo("[AstralPartyAutoFocus] 监控已启动。"); }
             catch (Exception e) { Diagnostics.Log("启动失败: " + e); }
         }
 
