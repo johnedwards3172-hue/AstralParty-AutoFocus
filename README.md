@@ -48,6 +48,17 @@ HybridCLR 在 `MetadataCache_GetTypeInfoFromTypeDefinitionIndex` 函数头插入
 Il2CppInterop 的 detour 在迁移指令时偏移失效，调用即崩溃。
 
 **解决办法**：用 [PR #251](https://github.com/BepInEx/Il2CppInterop/pull/251) 分支重新编译，替换掉原版。
+本仓库提供了一个一键脚本（需要 Git + .NET SDK）：
+
+```powershell
+# 只编译，产物路径会打印出来，由你手动覆盖
+powershell -ExecutionPolicy Bypass -File tools\build-il2cppinterop.ps1
+
+# 编译并自动替换到游戏目录（会先把原文件备份成 .orig）
+powershell -ExecutionPolicy Bypass -File tools\build-il2cppinterop.ps1 -Deploy -GameDir "D:\Steam\steamapps\common\Astral Party\8vJXn6CN"
+```
+
+手动做也一样：
 
 ```bash
 git clone https://github.com/BepInEx/Il2CppInterop
@@ -76,20 +87,17 @@ dotnet build -c Release Il2CppInterop.Runtime/Il2CppInterop.Runtime.csproj
 ## 三、安装
 
 1. 按上面两个前提处理好 BepInEx 6 与 Il2CppInterop。
-2. 编译插件（或到 Releases 页下载编译好的 `AstralPartyAutoFocus.dll`）：
+2. 编译插件（或到 Releases 页下载编译好的 `AstralPartyAutoFocus.dll`）。
+   只需要 BepInEx 的 `core` 目录，**不需要**游戏生成的 interop 文件：
 
 ```powershell
 cd src
-dotnet build -c Release
+dotnet build -c Release -p:BepInExDir="D:\...\BepInEx\core"
 ```
 
-如果 BepInEx 不在默认位置，用参数指定：
-
-```powershell
-dotnet build -c Release `
-  -p:BepInExDir="<你的BepInEx>\core" `
-  -p:InteropDir="<你的游戏目录>\BepInEx\interop"
-```
+也可以把 4 个 DLL（`BepInEx.Core.dll`、`BepInEx.Unity.IL2CPP.dll`、
+`Il2CppInterop.Runtime.dll`、`0Harmony.dll`）放到仓库的 `lib\BepInEx\core\`，
+之后直接 `dotnet build -c Release` 即可，无需每次传参。
 
 3. 部署：
 
@@ -191,6 +199,9 @@ src/
   Win32.cs        窗口前置 / 置顶（含消息队列修复与多轮重试）
   Diagnostics.cs  立即刷盘的诊断日志
   SelfTest.cs     il2cpp API 可用性自检
+
+tools/
+  build-il2cppinterop.ps1   一键编译打过 PR #251 补丁的 Il2CppInterop
 ```
 
 ---

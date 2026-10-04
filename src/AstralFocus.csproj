@@ -13,7 +13,7 @@
     <Description>星引擎 Astral Party 行动前置插件：轮到我操作时自动把游戏窗口置前</Description>
     <NoWarn>CS0436;CS0108</NoWarn>
 
-    <!-- 不把本机源码路径写进 DLL/PDB -->
+    <!-- 不把本机源码路径写进 DLL -->
     <Deterministic>true</Deterministic>
     <DeterministicSourcePaths>true</DeterministicSourcePaths>
     <PathMap>$(MSBuildProjectDirectory)=/src</PathMap>
@@ -21,23 +21,21 @@
   </PropertyGroup>
 
   <!--
-    BepInEx 依赖路径。三种指定方式，优先级从高到低：
-      1. dotnet build -c Release -p:BepInExDir=... -p:InteropDir=...
-      2. 放在仓库的 lib/ 目录下：
-           lib/BepInEx/core/*.dll      (BepInEx.Core.dll 等)
-           lib/interop/*.dll           (游戏 BepInEx/interop 下的生成文件)
-      3. 直接改下面两个默认值
+    只需要 BepInEx 6 (IL2CPP) 的 BepInEx\core 目录里的 4 个 DLL。
+    本项目不引用 UnityEngine / Il2Cppmscorlib，因此不需要游戏生成的 interop 文件。
+
+    指定方式，优先级从高到低：
+      1. dotnet build -c Release -p:BepInExDir="...\BepInEx\core"
+      2. 把 DLL 放到仓库的 lib/BepInEx/core/
+      3. 直接改下面的默认值
   -->
   <PropertyGroup>
     <BepInExDir Condition="'$(BepInExDir)' == '' AND Exists('$(MSBuildThisFileDirectory)..\lib\BepInEx\core')">$(MSBuildThisFileDirectory)..\lib\BepInEx\core</BepInExDir>
-    <InteropDir Condition="'$(InteropDir)' == '' AND Exists('$(MSBuildThisFileDirectory)..\lib\interop')">$(MSBuildThisFileDirectory)..\lib\interop</InteropDir>
   </PropertyGroup>
 
-  <Target Name="CheckDeps" BeforeTargets="ResolveAssemblyReferences">
+  <Target Name="CheckBepInEx" BeforeTargets="ResolveAssemblyReferences">
     <Error Condition="!Exists('$(BepInExDir)\BepInEx.Core.dll')"
-           Text="找不到 BepInEx.Core.dll。请用 -p:BepInExDir=&quot;...\BepInEx\core&quot; 指定 BepInEx 6 (IL2CPP) 的 core 目录，或把文件放到 lib\BepInEx\core\。" />
-    <Error Condition="!Exists('$(InteropDir)\UnityEngine.dll')"
-           Text="找不到 UnityEngine.dll。请用 -p:InteropDir=&quot;...\BepInEx\interop&quot; 指定游戏生成的 interop 目录，或把文件放到 lib\interop\。" />
+           Text="找不到 BepInEx.Core.dll。请用 -p:BepInExDir=&quot;...\BepInEx\core&quot; 指定 BepInEx 6 (IL2CPP) 的 core 目录，或把 DLL 放到 lib\BepInEx\core\。所需文件：BepInEx.Core.dll、BepInEx.Unity.IL2CPP.dll、Il2CppInterop.Runtime.dll、0Harmony.dll" />
   </Target>
 
   <ItemGroup>
@@ -55,18 +53,6 @@
     </Reference>
     <Reference Include="0Harmony">
       <HintPath>$(BepInExDir)\0Harmony.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>$(InteropDir)\UnityEngine.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="Il2Cppmscorlib">
-      <HintPath>$(InteropDir)\Il2Cppmscorlib.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>$(InteropDir)\UnityEngine.CoreModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>
