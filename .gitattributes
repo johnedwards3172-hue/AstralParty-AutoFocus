@@ -1,0 +1,7 @@
+* text=auto
+*.cs   text diff=csharp
+*.csproj text
+*.md   text
+*.ps1  text
+*.dll  binary
+*.png  binary

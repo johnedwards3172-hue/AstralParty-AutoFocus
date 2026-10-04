@@ -1,0 +1,16 @@
+# 构建产物
+[Bb]in/
+[Oo]bj/
+dist/
+
+# IDE
+.vs/
+.idea/
+*.user
+*.suo
+
+# 本地备份 / 临时文件
+*.bak
+*.orig
+*.tmp
+*~
