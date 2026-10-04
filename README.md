@@ -114,6 +114,17 @@ powershell -ExecutionPolicy Bypass -File install.ps1 -GameDir "你的游戏目�
 
 **首次启动**会生成 IL2CPP interop 文件，比平时慢很多，属正常。
 
+### 从 v0.3.0 及更早版本升级
+
+插件已更名，GUID 从 `astralfocus.local.turnnotify` 变为 `astralparty.autofocus`：
+
+- 旧 DLL 叫 `AstralFocus.dll`，**必须删掉或改名**，否则两个插件同时加载、各自抢一次窗口。
+  `install.ps1` 会自动把它改名为 `AstralFocus.dll.disabled`（游戏运行中锁定时会提醒你手动处理）。
+- 旧配置 `astralfocus.local.turnnotify.cfg` 不再被读取，新配置是 `astralparty.autofocus.cfg`，**默认回到探查模式**，需重新把 `LogOnly` 改成 `false`。
+- 诊断日志从 `AstralFocus.diag.log` 变为 `AstralPartyAutoFocus.diag.log`。
+
+功能行为与 v0.3.0 完全一致。
+
 ---
 
 ## 四、两步走（强烈建议）

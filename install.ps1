@@ -84,6 +84,19 @@ $srcHash = (Get-FileHash $PluginDll -Algorithm SHA1).Hash
 $dstHash = (Get-FileHash $dst -Algorithm SHA1).Hash
 if ($srcHash -ne $dstHash) { throw "部署校验失败：目标 DLL 与构建产物不一致" }
 
+# legacy AstralFocus.dll must not load together with the renamed plugin.
+$legacy = Join-Path $pluginsDir 'AstralFocus.dll'
+if (Test-Path $legacy) {
+    $legacyOff = Join-Path $pluginsDir 'AstralFocus.dll.disabled'
+    try {
+        if (Test-Path $legacyOff) { Remove-Item -LiteralPath $legacyOff -Force }
+        Move-Item -LiteralPath $legacy -Destination $legacyOff -Force
+        Write-Host 'Disabled legacy plugin: AstralFocus.dll' -ForegroundColor Yellow
+    } catch {
+        Write-Host 'WARN: cannot rename legacy AstralFocus.dll (game running?). Remove it manually.' -ForegroundColor Red
+    }
+}
+
 Write-Host "== 3/3 完成 ==" -ForegroundColor Green
 Write-Host "插件: $dst"
 Write-Host "SHA1: $dstHash"
@@ -92,6 +105,7 @@ Write-Host ""
 Write-Host "默认是【探查模式】：只写日志、不前置窗口。" -ForegroundColor Yellow
 Write-Host "请登录并打一局，然后查看 BepInEx\AstralPartyAutoFocus.diag.log 核对触发点。"
 Write-Host "确认无误后，编辑 BepInEx\config\astralparty.autofocus.cfg，把 LogOnly 改成 false 即可启用前置。"
+Write-Host 'Upgrading from v0.3.0? GUID changed; the old cfg is ignored. Re-set options in the new cfg.' -ForegroundColor Yellow
 Write-Host ""
 Write-Host "启动方式（直接跑 exe 会因非 Steam 客户端自杀）：" -ForegroundColor Yellow
 Write-Host '  & "<你的Steam目录>\Steam.exe" -applaunch 2622000'
